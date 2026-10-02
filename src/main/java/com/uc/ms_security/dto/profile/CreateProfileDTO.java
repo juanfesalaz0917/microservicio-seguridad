@@ -1,5 +1,10 @@
 package com.uc.ms_security.dto.profile;
 
-public class CreateProfileDTO extends BaseProfileDTO{
-    
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class CreateProfileDTO extends BaseProfileDTO {
+	private Long userId;
 }

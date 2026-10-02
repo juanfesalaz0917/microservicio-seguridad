@@ -22,35 +22,61 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/profiles/")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class ProfileController {
     private final ProfileService profileService;
 
-    @PostMapping()
+    @PostMapping({"/profiles", "/profiles/"})
     @ResponseStatus(HttpStatus.CREATED)
     public ProfileResponseDTO create(@Valid @RequestBody CreateProfileDTO dto) {
         return profileService.create(dto);
     }
 
-    @GetMapping()
+    @PostMapping("/users/{userId}/profile")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProfileResponseDTO createForUser(
+            @PathVariable Long userId,
+            @Valid @RequestBody CreateProfileDTO dto) {
+        return profileService.create(userId, dto);
+    }
+
+    @GetMapping({"/profiles", "/profiles/"})
     public List<ProfileResponseDTO> findAll() {
         return profileService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/profiles/{id}")
     public ProfileResponseDTO findById(@PathVariable Long id) {
         return profileService.findById(id);
     }
 
-    @PutMapping("/{id}")
+    @GetMapping("/users/{userId}/profile")
+    public ProfileResponseDTO findByUserId(@PathVariable Long userId) {
+        return profileService.findByUserId(userId);
+    }
+
+    @PutMapping("/profiles/{id}")
     public ProfileResponseDTO update(@PathVariable Long id, @Valid @RequestBody UpdateProfileDTO dto) {
         return profileService.update(id, dto);
     }
 
-    @DeleteMapping("/{id}")
+    @PutMapping("/users/{userId}/profile")
+    public ProfileResponseDTO updateForUser(
+            @PathVariable Long userId,
+            @Valid @RequestBody UpdateProfileDTO dto) {
+        return profileService.updateByUserId(userId, dto);
+    }
+
+    @DeleteMapping("/profiles/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         profileService.delete(id);
+    }
+
+    @DeleteMapping("/users/{userId}/profile")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteForUser(@PathVariable Long userId) {
+        profileService.deleteByUserId(userId);
     }
 }
