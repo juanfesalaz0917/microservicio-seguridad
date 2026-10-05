@@ -1,6 +1,6 @@
 package com.uc.ms_security.dto.session;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,13 +9,15 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class BaseSessionDTO {
+public  class SessionRequestDTO {
     @NotBlank(message = "El token es obligatorio.")
     private String token;
 
     @NotNull(message = "Debe haber una expiracion.")
-    private ZonedDateTime expiration;
+    @Future(message = "La fecha de expiracion debe ser en el futuro.")
+    private LocalDateTime expiration;
 
     @NotBlank(message = "Debe haber un codigo 2FA.")
+    @Size(min = 6, max = 10, message = "El codigo 2FA debe tener entre 6 y 10 caracteres.")
     private String code2FA;
 }

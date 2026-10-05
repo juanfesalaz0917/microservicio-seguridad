@@ -2,6 +2,7 @@ package com.uc.ms_security.service;
 
 import java.util.List;
 
+import com.uc.ms_security.entity.User;
 import org.springframework.stereotype.Service;
 
 import com.uc.ms_security.dto.profile.CreateProfileDTO;
@@ -34,7 +35,7 @@ public class ProfileService {
     }
 
     public ProfileResponseDTO create(Long userId, CreateProfileDTO dto) {
-        var user = userRepository.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ApplicationException(
                         ErrorCase.NOT_FOUND,
                         "Usuario no encontrado con id: " + userId

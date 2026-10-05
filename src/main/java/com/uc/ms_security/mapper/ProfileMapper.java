@@ -24,6 +24,10 @@ public class ProfileMapper {
     }
 
     public ProfileResponseDTO toResponseDTO(Profile profile) {
+        if (profile == null) {
+            return null;
+        } //Validacion para evitar NullPointerException en caso de que el perfil sea nulo. 
+        
         return new ProfileResponseDTO(
                 profile.getId(),
                 profile.getPhone(),
