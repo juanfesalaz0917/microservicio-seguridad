@@ -31,7 +31,7 @@ public class SessionController {
     @ResponseStatus(HttpStatus.CREATED)
     public SessionResponseDTO create(
             @PathVariable Long userId,
-            @Valid @RequestBody CreateSessionDTO dto) {
+            @Valid @RequestBody SessionRequestDTO dto) {
         return sessionService.create(userId, dto);
     }
 
